@@ -12,7 +12,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://api.imgur.com/oauth2/authorize', $state);
+        return $this->buildAuthUrlFromBase(
+            'https://api.imgur.com/oauth2/authorize', $state
+        );
     }
 
     /**
@@ -28,9 +30,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('https://api.imgur.com/3/account/me', [
+        $response = $this->getHttpClient()->get(
+            'https://api.imgur.com/3/account/me', [
             'headers' => [
-                'Accept'        => 'application/json',
                 'Authorization' => 'Bearer '.$token,
             ],
         ]);
@@ -44,11 +46,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id'       => $user['id'],
-            'nickname' => $user['url'],
-            'name'     => null,
-            'email'    => null,
-            'avatar'   => null,
+            'id' => $user['id'], 'nickname' => $user['url'], 'name' => null,
+            'email' => null, 'avatar' => null,
         ]);
     }
 
@@ -57,6 +56,8 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenFields($code)
     {
-        return array_merge(parent::getTokenFields($code), ['grant_type' => 'authorization_code']);
+        return array_merge(parent::getTokenFields($code), [
+            'grant_type' => 'authorization_code',
+        ]);
     }
 }
