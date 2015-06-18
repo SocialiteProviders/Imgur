@@ -1,4 +1,5 @@
 <?php
+
 namespace SocialiteProviders\Imgur;
 
 use SocialiteProviders\Manager\SocialiteWasCalled;
